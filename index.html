@@ -367,17 +367,6 @@
       line-height: 1.6;
     }
 
-    .section-head__products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px 0;
-    }
-
-    .section-head__products .dot {
-      margin: 0 8px;
-    }
-
     .section-head .btn {
       margin-top: 24px;
     }
@@ -428,6 +417,19 @@
       max-width: 420px;
     }
 
+    /* —— Inquiry panels —— */
+    .inquiry-panel__label {
+      display: none;
+    }
+
+    .inquiry[data-tab="venta"] .inquiry-panel[data-panel="postventa"] {
+      display: none;
+    }
+
+    .inquiry[data-tab="postventa"] .inquiry-panel[data-panel="venta"] {
+      display: none;
+    }
+
     /* —— Inquiry grid —— */
     .inquiry__grid {
       display: grid;
@@ -451,34 +453,9 @@
       transition: background 0.25s ease;
     }
 
-    .inquiry[data-tab="postventa"] .inquiry__cell,
-    .inquiry[data-tab="postventa"] .inquiry__wide {
+    .inquiry-panel[data-panel="postventa"] .inquiry__cell,
+    .inquiry-panel[data-panel="postventa"] .inquiry__wide {
       background: #3f3f3f;
-    }
-
-    /* —— App cards —— */
-    .app-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .app-card__media {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      margin-bottom: 16px;
-    }
-
-    .app-card__title {
-      font-size: 16px;
-      font-weight: var(--weight-medium);
-      margin-bottom: 6px;
-    }
-
-    .app-card__desc {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.5;
     }
 
     /* —— Industries —— */
@@ -768,14 +745,53 @@
 
     /* —— Responsive —— */
     @media (max-width: 900px) {
+      .stats {
+        padding: 32px 0 var(--section-gap);
+      }
+
+      .stats-card {
+        background: #0a0a0a;
+        border-radius: 16px;
+        padding: 28px 24px;
+      }
+
       .stats__grid {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 0;
+        text-align: left;
+      }
+
+      .stat {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .stat:first-child {
+        padding-top: 0;
       }
 
       .stat__label {
-        max-width: 280px;
+        margin: 0;
+        max-width: none;
         font-size: 15px;
+        color: var(--muted);
+        order: 2;
+        text-align: right;
+      }
+
+      .stat__value {
+        font-size: 28px;
+        order: 1;
+        flex-shrink: 0;
       }
 
       .feature {
@@ -838,8 +854,35 @@
         gap: 24px;
       }
 
+      .inquiry-intro__actions {
+        display: none;
+      }
+
+      .inquiry-intro__title {
+        margin-bottom: 0;
+      }
+
       .inquiry-intro__desc {
         max-width: none;
+      }
+
+      .inquiry-panels {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .inquiry[data-tab="venta"] .inquiry-panel[data-panel="postventa"],
+      .inquiry[data-tab="postventa"] .inquiry-panel[data-panel="venta"] {
+        display: block;
+      }
+
+      .inquiry-panel__label {
+        display: block;
+        font-size: 18px;
+        font-weight: var(--weight-medium);
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
       }
 
       .inquiry__grid {
@@ -850,13 +893,11 @@
         aspect-ratio: 16 / 9;
       }
 
-      .app-grid,
       .support__grid,
       .testimonials__grid {
         grid-template-columns: 1fr;
       }
 
-      .app-card__media,
       .support-card__media {
         aspect-ratio: 16 / 10;
       }
@@ -928,15 +969,6 @@
         max-width: none;
       }
 
-      .section-head__products {
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .section-head__products .dot {
-        display: none;
-      }
     }
 
     @media (max-width: 480px) {
@@ -1019,22 +1051,24 @@
   <!-- STATS -->
   <section class="stats" aria-label="Métricas clave">
     <div class="container">
-      <div class="stats__grid">
-        <div class="stat">
-          <div class="stat__value">+20M</div>
-          <p class="stat__label">conversaciones/mes</p>
-        </div>
-        <div class="stat">
-          <div class="stat__value">98%</div>
-          <p class="stat__label">consultas resueltas sin intervención humana</p>
-        </div>
-        <div class="stat">
-          <div class="stat__value">35%</div>
-          <p class="stat__label">de carritos abandonados recuperados vía WhatsApp</p>
-        </div>
-        <div class="stat">
-          <div class="stat__value">+1M</div>
-          <p class="stat__label">USD generados al año</p>
+      <div class="stats-card">
+        <div class="stats__grid">
+          <div class="stat">
+            <div class="stat__value">+20M</div>
+            <p class="stat__label">conversaciones/mes</p>
+          </div>
+          <div class="stat">
+            <div class="stat__value">98%</div>
+            <p class="stat__label">sin intervención</p>
+          </div>
+          <div class="stat">
+            <div class="stat__value">35%</div>
+            <p class="stat__label">carritos recuperados</p>
+          </div>
+          <div class="stat">
+            <div class="stat__value">+1M</div>
+            <p class="stat__label">USD generados/año</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1101,41 +1135,25 @@
         </p>
       </div>
 
-      <div class="inquiry__grid">
-        <div class="inquiry__cell"></div>
-        <div class="inquiry__cell"></div>
-        <div class="inquiry__cell"></div>
-        <div class="inquiry__wide"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- UN SOLO DESTINO -->
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-head__title">Un solo sistema.<br />Tres productos.</h2>
-        <p class="section-head__desc section-head__products">
-          <span>Engage activa</span><span class="dot" aria-hidden="true">·</span><span>Desk centraliza</span><span class="dot" aria-hidden="true">·</span><span>Studio responde y vende.</span>
-        </p>
-      </div>
-
-      <div class="app-grid">
-        <article class="app-card">
-          <div class="app-card__media ph"></div>
-          <h3 class="app-card__title">Engage</h3>
-          <p class="app-card__desc">Campañas, recuperación de carritos, recompra</p>
-        </article>
-        <article class="app-card">
-          <div class="app-card__media ph"></div>
-          <h3 class="app-card__title">Helpdesk</h3>
-          <p class="app-card__desc">Todo mensaje crea un ticket. Distribuye a Studio o agente humano.</p>
-        </article>
-        <article class="app-card">
-          <div class="app-card__media ph"></div>
-          <h3 class="app-card__title">Studio</h3>
-          <p class="app-card__desc">Agentes que responden, venden y escalan en Desk</p>
-        </article>
+      <div class="inquiry-panels">
+        <div class="inquiry-panel" data-panel="venta">
+          <h3 class="inquiry-panel__label">Venta</h3>
+          <div class="inquiry__grid">
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__wide"></div>
+          </div>
+        </div>
+        <div class="inquiry-panel" data-panel="postventa">
+          <h3 class="inquiry-panel__label">Postventa</h3>
+          <div class="inquiry__grid">
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__cell"></div>
+            <div class="inquiry__wide"></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
